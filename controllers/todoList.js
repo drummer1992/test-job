@@ -2,6 +2,7 @@
 
 const tokens = require('../db/tokens');
 const dbUser = require('../db/users');
+const map = require('../mappers/todo');
 
 module.exports = ctx => {
   const token = ctx.request.get('Authorization').split(' ')[1];
@@ -15,10 +16,9 @@ module.exports = ctx => {
   }
 
   if (user.isAdmin) {
-    return ctx.body = dbUser;
+    return ctx.body = map(dbUser);
   }
   ctx.body = {
-    name: user.username,
-    todoList: user.todoList
+    [user.username]: user.todoList
   };
 };
