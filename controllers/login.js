@@ -2,7 +2,7 @@
 
 const passport = require('../libs/passport');
 const uuid = require('uuid/v4');
-const tokens = require('../db/tokens');
+const tokensUsers = require('../db/tokensUsers');
 
 module.exports = async (ctx, next) => {
   await passport.authenticate('local', (err, user, info) => {
@@ -12,7 +12,7 @@ module.exports = async (ctx, next) => {
       ctx.throw(400, info);
     }
     const token = uuid();
-    tokens[token] = user;
+    tokensUsers[token] = user;
     ctx.body = { token };
   })(ctx, next);
 };

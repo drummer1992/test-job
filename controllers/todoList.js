@@ -1,6 +1,6 @@
 'use strict';
 
-const tokens = require('../db/tokens');
+const tokensUsers = require('../db/tokensUsers');
 const dbUser = require('../db/users');
 const map = require('../mappers/todo');
 
@@ -9,7 +9,7 @@ module.exports = ctx => {
   if (!token) {
     return ctx.throw(400, 'Что бы получить доступ к заметкам нужно иметь token');
   }
-  const user = tokens[token];
+  const user = tokensUsers[token];
 
   if (!user) {
     ctx.throw(400, 'Вы не имеете права просматривать заметки!');

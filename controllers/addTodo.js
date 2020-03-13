@@ -1,6 +1,6 @@
 'use strict';
 
-const tokens = require('../db/tokens');
+const tokensUsers = require('../db/tokensUsers');
 const uuid = require('uuid/v4');
 
 module.exports = ctx => {
@@ -9,7 +9,7 @@ module.exports = ctx => {
     return ctx.throw(400, 'Что бы добавить заметку нужно зарегистрироваться');
   }
 
-  const user = tokens[token];
+  const user = tokensUsers[token];
   if (!user) {
     ctx.throw(400, 'Пользователя с таким токеном не существует!');
   }
