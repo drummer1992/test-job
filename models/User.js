@@ -2,15 +2,17 @@
 
 const crypto = require('crypto');
 const { crypto: config } = require('../config');
+const uuid = require('uuid/v4');
 
 class User {
 
-  constructor({ username, isAdmin }) {
-    this.username = username;
+  constructor({ login, isAdmin }) {
+    this.id = uuid();
+    this.login = login;
     this.hash = null;
     this.salt = null;
     this.isAdmin = isAdmin;
-    this.todoList = [];
+    this.token = null;
   }
 
   static generateSalt() {

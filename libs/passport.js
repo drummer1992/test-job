@@ -5,11 +5,16 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const passport = new KoaPassport();
 
-const dbUser = require('../db/users');
+const users = require('../db/users');
 
-passport.use(new LocalStrategy({ session: false }, async (username, password, done) => {
+passport.use(new LocalStrategy({ session: false, usernameField: 'login' }, async (login, password, done) => {
   try {
-    const user = dbUser[username];
+    let user = null;
+    for (const id in users) {
+      if (users[id].login === login) {
+        user = users[id];
+      }
+    }
     if (!user) return done(null, false, 'Такого пользователя не существует!');
 
     const isValidPassword = await user.checkPassword(password);

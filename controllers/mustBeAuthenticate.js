@@ -1,16 +1,23 @@
 'use strict';
 
-const tokensUsers = require('../db/tokensUsers');
+const users = require('../db/users');
 
-module.exports = async function mustBeAuthenticate(ctx, next) {
-  const token = ctx.request.get('Authorization').split(' ')[1];
+module.exports = async (ctx, next) => {
+  const token =  ctx.request.get('Authorization').split(' ')[1];
   if (!token) {
-    return ctx.throw(400, 'Что бы получить доступ к заметкам нужно иметь token');
+    return ctx.throw(401, 'Что бы добавить заметку нужно зарегистрироваться');
   }
-  const user = tokensUsers[token];
-  if (!user) {
-    ctx.throw(400, 'Пользователя с таким токеном не существует!');
+  let loginUser = null;
+  for (const id in users) {
+    const user = users[id];
+    if (user.token === token) {
+      loginUser = user;
+    }
   }
-  ctx.user = user;
-  next();
+
+  if (!loginUser) {
+    return ctx.throw(401, 'Пользователя с таким токеном не существует!');
+  }
+  ctx.user = loginUser;
+  await next();
 };

@@ -1,9 +1,12 @@
 'use strict';
 
-module.exports = function(users) {
+const users = require('../db/users');
+
+module.exports = function(todoList) {
   const response = {};
-  for (const user in users) {
-    response[user] = users[user].todoList;
+  for (const id in todoList) {
+    const login = users[id].login;
+    response[login] = todoList[id];
   }
   return response;
 };

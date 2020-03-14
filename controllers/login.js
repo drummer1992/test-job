@@ -2,17 +2,17 @@
 
 const passport = require('../libs/passport');
 const uuid = require('uuid/v4');
-const tokensUsers = require('../db/tokensUsers');
+const users = require('../db/users');
 
 module.exports = async (ctx, next) => {
-  await passport.authenticate('local', (err, user, info) => {
+  await passport.authenticate('local', (err, login, info) => {
     if (err) throw err;
 
-    if (!user) {
-      ctx.throw(400, info);
+    if (!login) {
+      ctx.throw(401, info);
     }
     const token = uuid();
-    tokensUsers[token] = user;
+    users[login.id].token = token;
     ctx.body = { token };
   })(ctx, next);
 };

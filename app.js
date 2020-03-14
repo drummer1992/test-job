@@ -19,34 +19,34 @@ const deleteTodo = require('./controllers/deleteTodo');
 const todoList = require('./controllers/todoList');
 
 const mustBeAuthenticate = require('./controllers/mustBeAuthenticate');
+const validationErrorHandler = require('./libs/validationErrorHandler');
 
 app.use(async (ctx, next) => {
   try {
     await next();
-  } catch (error) {
-    if (error.status) {
-      return ctx.body = {
-        error: error.message
-      };
+  } catch (err) {
+    if (err.status) {
+      ctx.status = err.status;
+      ctx.body = { error: err.message };
+    } else {
+      console.error(err);
+      ctx.status = 500;
+      ctx.body = { error: 'Internal server error' };
     }
-    console.log(error);
-    ctx.body = {
-      error: 'Internal server error',
-    };
   }
 });
 
-router.post('/login', login);
+router.post('/login', validationErrorHandler, login);
 
-router.post('/register', register);
+router.post('/register', validationErrorHandler, register);
 
-router.get('/todoList', todoList);
+router.get('/todoList', mustBeAuthenticate, todoList);
 
-router.post('/addTodo', addTodo);
+router.post('/todoList', mustBeAuthenticate, addTodo);
 
-router.delete('/deleteTodo/:id', mustBeAuthenticate, deleteTodo);
+router.delete('/todoList/:id', mustBeAuthenticate, deleteTodo);
 
-router.put('/updateTodo/:id', mustBeAuthenticate, updateTodo);
+router.put('/todoList/:id', mustBeAuthenticate, updateTodo);
 
 app
   .use(bodyParser())

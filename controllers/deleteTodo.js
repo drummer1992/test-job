@@ -1,19 +1,21 @@
 'use strict';
 
-module.exports = ctx => {
+const todoList = require('../db/todoList');
+
+module.exports = async ctx => {
   const { id } = ctx.params;
 
   if (!id) {
-    ctx.throw(400, 'Вы не указали свойтво id в параметрах запроса');
+    return ctx.throw(400, 'Вы не указали свойтво id в параметрах запроса');
   }
 
-  const { todoList } = ctx.user;
-
+  const { user } = ctx;
+  const userTodo = todoList[user.id];
   let deleted = false;
 
-  todoList.forEach((item, i) => {
+  userTodo.forEach((item, i) => {
     if (item.id === id) {
-      todoList.splice(i, 1);
+      userTodo.splice(i, 1);
       deleted = true;
     }
   });
@@ -22,5 +24,5 @@ module.exports = ctx => {
       message: 'Заметка удалена!'
     };
   }
-  ctx.throw(404, 'Такой заметки не существует');
+  return ctx.throw(404, 'Такой заметки не существует');
 };
