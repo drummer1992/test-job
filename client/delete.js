@@ -4,6 +4,7 @@ const request = require('./request');
 
 module.exports = function deleteTodoItem(rl) {
   return new Promise((resolve, reject) => {
+    if (!rl.token) return reject({ error: 'Нужно быть залогиненым' });
     rl.question('Введите "id" заметки!\n\n',
       async answer => {
         const answers = answer.split(' ');

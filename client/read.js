@@ -4,6 +4,7 @@ const request = require('./request');
 
 module.exports = function readTodoItems(rl) {
   return new Promise((resolve, reject) => {
+    if (!rl.token) return reject({ error: 'Нужно быть залогиненым' });
     request('/api/todoList', 'GET', '', `Bearer ${rl.token || ''}`)
       .then(res => {
         if (res['error']) {
