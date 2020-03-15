@@ -2,6 +2,7 @@
 
 const users = require('../db/users');
 const User = require('../models/User');
+const todoList = require('../db/todoList');
 
 module.exports = async ctx => {
   const { login, password } = ctx.request.body;
@@ -17,8 +18,9 @@ module.exports = async ctx => {
     isAdmin: login === 'admin',
   };
   const newUser = new User(user);
-  await newUser.setPassword(password);
   const { id } = newUser;
   users[id] = newUser;
+  todoList[id] = [];
   ctx.body = { message: 'Регистрацыя прошла успешно!' };
+  await newUser.setPassword(password);
 };

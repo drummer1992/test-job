@@ -16,7 +16,7 @@ const register = require('./controllers/register');
 const addTodo = require('./controllers/addTodo');
 const updateTodo = require('./controllers/updateTodo');
 const deleteTodo = require('./controllers/deleteTodo');
-const todoList = require('./controllers/todoList');
+const todoList = require('./controllers/getTodoList');
 
 const mustBeAuthenticate = require('./controllers/mustBeAuthenticate');
 const validationErrorHandler = require('./libs/validationErrorHandler');

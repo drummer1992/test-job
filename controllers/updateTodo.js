@@ -14,8 +14,8 @@ module.exports = async ctx => {
   const userTodo = todoList[user.id];
   const note = ctx.request.body;
 
-  if (Object.keys(note).length === 0) {
-    return ctx.throw(400, 'Тело запроса пустое, заметка не добавлена!');
+  if (Object.keys(note).includes('')) {
+    return ctx.throw(400, 'Тело запроса пустое или некорректно заполнено, заметка не обновлена!');
   }
 
   let updated = false;
