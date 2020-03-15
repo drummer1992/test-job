@@ -31,6 +31,12 @@ module.exports = function request(path, method, body, token) {
     });
     request.write(body);
     request.on('finish', request.end);
+    request.on('error', error => {
+      if (error.code === 'ECONNREFUSED') {
+        console.log({ message: 'Нету связи с сервером!' });
+        process.exit();
+      }
+    });
   });
 };
 
