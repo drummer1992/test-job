@@ -20,7 +20,7 @@ module.exports = async function start(rl) {
   };
   const message = `todoListApp_API:\n
     register === регистрацыя пользователя
-    login  === логирования пользователя
+    login  === аутентификация пользователя
     create === создания заметки
     read === чтения заметок
     update === обновление заметки
