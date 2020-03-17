@@ -1,4 +1,4 @@
-# TodoListAPP cli-client / server
+# TodoListApp cli-client / server
 
 From the begining you must:
 
