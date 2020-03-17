@@ -23,12 +23,12 @@ async function isExistsToken(token) {
 module.exports = async (ctx, next) => {
   const token =  ctx.request.get('Authorization').split(' ')[1];
   if (!token) {
-    return ctx.throw(401, 'Чтобы иметь доступ к заметкам нужно быть залогиненым и иметь токен!');
+    return ctx.throw(401, 'Must be authenticated!');
   }
   const loginUser = await isExistsToken(token);
 
   if (!loginUser) {
-    return ctx.throw(401, 'Пользователя с таким токеном не существует!');
+    return ctx.throw(401, 'Invalid token!');
   }
   ctx.user = loginUser;
   await next();

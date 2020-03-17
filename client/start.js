@@ -18,19 +18,19 @@ module.exports = async function start(rl) {
     delete: remove,
     stop,
   };
-  const message = `todoListApp_API:\n
-    register === регистрацыя пользователя
-    login  === аутентификация пользователя
-    create === создания заметки
-    read === чтения заметок
-    update === обновление заметки
-    delete === удаление заметки
-    stop === выход зи процесса
+  const message = `TodoListApp CLI:\n
+    register  ---  User registration
+    login     ---  User authentication
+    create    ---  To create a note
+    read      ---  View all notes
+    update    ---  Update the note
+    delete    ---  Delete the note
+    stop      ---  Exit
   \n`;
-  rl.question(`Что будем делать?\n\n${message}`, async answer => {
+  rl.question(`What do we do?\n\n${message}`, async answer => {
 
     if (!Object.keys(queries).includes(answer)) {
-      console.log({ error: 'Не корректный запрос' }, '\n');
+      console.log({ error: 'Bad request!' }, '\n');
     }
     try {
       const res = await queries[answer](rl);

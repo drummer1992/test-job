@@ -6,13 +6,16 @@ module.exports = async ctx => {
   const { id } = ctx.params;
 
   if (!id) {
-    return ctx.throw(400, 'Вы не указали свойтво id в параметрах запроса');
+    return ctx.throw(400, 'No id specified in query parameter!');
+  }
+  if (isNaN(+id)) {
+    return ctx.throw(400, 'Id must be type of number!');
   }
 
   const note = ctx.request.body;
 
   if (Object.keys(note).includes('')) {
-    return ctx.throw(400, 'Тело запроса пустое или некорректно заполнено, заметка не обновлена!');
+    return ctx.throw(400, 'Subject and notes are required fields for the request!');
   }
 
   const userId = ctx.user.id;
@@ -21,9 +24,9 @@ module.exports = async ctx => {
 
   if (updated) {
     return ctx.body = {
-      message: 'Заметка обновлена!',
+      message: 'Note updated!',
       note,
     };
   }
-  return ctx.throw(404, 'Такой заметки не существует');
+  return ctx.throw(404, 'This note does not exist!');
 };

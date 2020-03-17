@@ -12,7 +12,7 @@ module.exports = {
     dialect: process.env.DB_DIALECT || 'postgres',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'todolist_app',
-    username: process.env.DB_USER_NAME || 'varlamov_mac',
+    username: process.env.DB_USER_NAME || 'username_for_database',
     persistent: !!process.argv[2] || false,
   }
 };

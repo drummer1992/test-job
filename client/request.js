@@ -26,7 +26,7 @@ module.exports = function request(path, method, body, token) {
           const body = JSON.parse(chunk);
           if (body.token) {
             tokenStorage.token = body.token;
-            return resolve({ message: 'Вы успешно аутентифицировались!' });
+            return resolve({ message: 'You have successfully authenticated!' });
           }
           return resolve(body);
         } catch (error) {
@@ -38,7 +38,7 @@ module.exports = function request(path, method, body, token) {
     request.on('finish', request.end);
     request.on('error', error => {
       if (error.code === 'ECONNREFUSED') {
-        console.log({ message: 'Нету связи с сервером!' });
+        console.log({ message: 'No connection to server!' });
         process.exit();
       }
     });

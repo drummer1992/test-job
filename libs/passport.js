@@ -11,10 +11,10 @@ const passport = new KoaPassport();
 passport.use(new LocalStrategy({ session: false, usernameField: 'login' }, async (login, password, done) => {
   try {
     const user = await isExistsUser(login);
-    if (!user) return done(null, false, 'Такого пользователя не существует!');
+    if (!user) return done(null, false, 'This user does not exist!');
 
     const isValidPassword = await user.checkPassword(password);
-    if (!isValidPassword) return done(null, false, 'Не верный пароль!');
+    if (!isValidPassword) return done(null, false, 'Invalid password!');
 
     return done(null, user);
   } catch (error) {

@@ -10,11 +10,11 @@ const { db: { persistent } } = require('../config');
 module.exports = async ctx => {
   const note = ctx.request.body;
   if (Object.keys(note).includes('')) {
-    return ctx.throw(400, 'Тело запроса пустое или некорректно заполнено, заметка не добавлена!');
+    return ctx.throw(400, 'Subject and notes are required fields for the request!');
   }
   const { id } = ctx.user;
   await createItem(note, id);
-  ctx.body = { message: 'Заметка успешно добавлена!' };
+  ctx.body = { message: 'Note added successfully!' };
 };
 
 async function createItem(note, id) {

@@ -17,7 +17,7 @@ module.exports = async ctx => {
     const isUnique = await isUniqueUser(login, password);
 
     if (!isUnique) {
-      return ctx.throw(400, 'Пользователь с таким логином уже существует!');
+      return ctx.throw(400, 'This login already exists!');
     }
 
     const user = {
@@ -25,7 +25,7 @@ module.exports = async ctx => {
       isAdmin: login === 'admin',
     };
     await createUser(user, password);
-    ctx.body = { message: 'Регистрацыя прошла успешно!' };
+    ctx.body = { message: 'Registration was successful!' };
   } catch (error) {
     return ctx.throw(500, error);
   }
@@ -59,5 +59,6 @@ async function isUniqueUser(login) {
   const user = await User.findOne({
     where: { login }
   });
-  return !user || false;
+
+  return !user;
 }
