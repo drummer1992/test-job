@@ -1,5 +1,6 @@
 'use strict';
 
+const uuid = require('uuid/v4');
 const todoList = require('../../db/todoList');
 const maper = require('../../mappers/createOrUpdateTodo');
 const { db: { persistent } } = require('../../config');
@@ -7,7 +8,7 @@ const { db: { persistent } } = require('../../config');
 const TodoListItem = require('../../models/localModels/TodoList_Item');
 const TodoList_Item = require('../../models/sequelize/TodoList_Item');
 
-module.exports = async function isDeleteOrUpdate(id, userId, data) {
+module.exports.isDeleteOrUpdate = async function isDeleteOrUpdate(id, userId, data) {
   if (!persistent) {
     const notes = todoList[userId];
     for (let i = 0; i < notes.length; i++) {
@@ -31,3 +32,5 @@ module.exports = async function isDeleteOrUpdate(id, userId, data) {
     await todo.update(maper(data, userId)) :
     null;
 };
+
+module.exports.isValidUUID = id => id.length === uuid().length;

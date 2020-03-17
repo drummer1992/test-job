@@ -9,6 +9,12 @@ const { crypto: config } = require('../../config');
 const sequelize = require('../../libs/connection');
 
 const User = sequelize.define('TodoUser', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+  },
   login: {
     type: DataTypes.TEXT,
     allowNull: false,

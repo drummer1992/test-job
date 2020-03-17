@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const sequelize = require('../libs/connection');
 
 const User = require('../models/sequelize/User');

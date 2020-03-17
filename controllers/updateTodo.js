@@ -1,12 +1,16 @@
 'use strict';
 
-const isDeleteOrUpdate = require('./helper/isDeleteOrUpdate');
+const { isDeleteOrUpdate, isValidUUID } = require('./helper');
 
 module.exports = async ctx => {
   const { id } = ctx.params;
 
   if (!id) {
     return ctx.throw(400, 'No id specified in query parameter!');
+  }
+
+  if (!isValidUUID(id)) {
+    return ctx.throw(400, 'Invalid id!');
   }
 
   const note = ctx.request.body;
