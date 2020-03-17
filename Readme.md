@@ -47,7 +47,7 @@ _5_: Start cli-client app:
 __node ./client/main.js__
 
 
-__Client CLI__
+__Client CLI__ <br>
 
 
 |          Command          |       Description         |
@@ -61,7 +61,7 @@ __Client CLI__
 |         stop              |          Exit             |
 
 
-__Server API__
+__Server API__ <br>
 
 
 | Method  | Route           | Description                | Parameter  | isRequiredToken  |
@@ -73,7 +73,7 @@ __Server API__
 | PUT     | /api/todoList/: | Update the note            |     id      |     true        |
 | DELETE  | /api/todoList/: | Delete the note            |     id      |     true        |
 
-
+<br>
 
 __Example of requests__:
 ```js
