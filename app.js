@@ -36,6 +36,8 @@ app.use(async (ctx, next) => {
   }
 });
 
+app.use(bodyParser());
+
 router.post('/login', validationErrorHandler, login);
 
 router.post('/register', validationErrorHandler, register);
@@ -49,8 +51,11 @@ router.delete('/todoList/:id', mustBeAuthenticate, deleteTodo);
 router.put('/todoList/:id', mustBeAuthenticate, updateTodo);
 
 app
-  .use(bodyParser())
   .use(router.routes())
-  .use(router.allowedMethods());
+  .use(router.allowedMethods())
+  .use(ctx => {
+    ctx.status = 404;
+    ctx.body = { error: 'Not Found' };
+  });
 
 module.exports = app;

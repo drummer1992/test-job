@@ -1,3 +1,14 @@
 'use strict';
 
-module.exports = {};
+module.exports = {/*{
+  userId: [{
+    id: ...,
+    note: {
+      subject: text,
+    },
+  },
+  ...
+]
+
+  },
+} */};

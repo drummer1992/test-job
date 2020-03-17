@@ -1,7 +1,7 @@
+/* eslint-disable require-atomic-updates */
 'use strict';
 
-const todoList = require('../db/todoList');
-const TodoItem = require('../models/TodoList_Item');
+const isDeleteOrUpdate = require('./helper/isDeleteOrUpdate');
 
 module.exports = async ctx => {
   const { id } = ctx.params;
@@ -9,24 +9,17 @@ module.exports = async ctx => {
   if (!id) {
     return ctx.throw(400, 'Вы не указали свойтво id в параметрах запроса');
   }
-  const { user } = ctx;
 
-  const userTodo = todoList[user.id];
   const note = ctx.request.body;
 
   if (Object.keys(note).includes('')) {
     return ctx.throw(400, 'Тело запроса пустое или некорректно заполнено, заметка не обновлена!');
   }
 
-  let updated = false;
+  const userId = ctx.user.id;
 
-  userTodo.forEach((item, i) => {
-    if (item.id === id) {
-      const updateTodoItem = new TodoItem(note);
-      userTodo.splice(i, 1, updateTodoItem);
-      updated = true;
-    }
-  });
+  const updated = await isDeleteOrUpdate(id, userId, note);
+
   if (updated) {
     return ctx.body = {
       message: 'Заметка обновлена!',

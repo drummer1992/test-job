@@ -2,9 +2,10 @@
 
 const http = require('http');
 const { host, port } = require('../config');
+const tokenStorage = require('./token');
 
 module.exports = function request(path, method, body, token) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const options = {
       port,
       host,
@@ -23,9 +24,13 @@ module.exports = function request(path, method, body, token) {
       res.on('data', chunk => {
         try {
           const body = JSON.parse(chunk);
+          if (body.token) {
+            tokenStorage.token = body.token;
+            return resolve({ message: 'Вы успешно аутентифицировались!' });
+          }
           return resolve(body);
         } catch (error) {
-          reject(error);
+          return resolve(chunk);
         }
       });
     });

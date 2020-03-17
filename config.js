@@ -6,5 +6,13 @@ module.exports = {
     length: 128,
     iterations: 1,
     digest: 'sha512'
+  },
+  db: {
+    host: process.env.DB_HOST || 'localhost',
+    dialect: process.env.DB_DIALECT || 'postgres',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'todolist_app',
+    username: process.env.DB_USER_NAME || 'varlamov_mac',
+    persistent: !!process.argv[2] || false,
   }
 };

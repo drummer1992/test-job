@@ -1,7 +1,7 @@
 'use strict';
 
 const crypto = require('crypto');
-const { crypto: config } = require('../config');
+const { crypto: config } = require('../../config');
 const uuid = require('uuid/v4');
 
 class User {
