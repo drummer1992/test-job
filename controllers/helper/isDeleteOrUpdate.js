@@ -20,8 +20,13 @@ module.exports = async function isDeleteOrUpdate(id, userId, data) {
   }
 
   if (!data) {
-    return await (await TodoList_Item.findByPk(id)).destroy();
+    const todo = await await TodoList_Item.findByPk(id);
+    return todo ?
+      await todo.destroy() :
+      null;
   }
   const todo = await TodoList_Item.findByPk(id);
-  return await todo.update(maper(data, userId));
+  return todo ?
+    await todo.update(maper(data, userId)) :
+    null;
 };
