@@ -16,6 +16,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-passport": "^4.1.3",
     "koa-router": "^8.0.8",
+    "nodemon": "^2.0.2",
     "passport-local": "^1.0.0",
     "pg": "^7.18.2",
     "sequelize": "^5.21.5",
