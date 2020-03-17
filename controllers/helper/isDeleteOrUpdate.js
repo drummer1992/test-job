@@ -17,6 +17,7 @@ module.exports = async function isDeleteOrUpdate(id, userId, data) {
           notes.splice(i, 1);
       }
     }
+    return null;
   }
 
   if (!data) {

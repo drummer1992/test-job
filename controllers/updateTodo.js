@@ -8,9 +8,6 @@ module.exports = async ctx => {
   if (!id) {
     return ctx.throw(400, 'No id specified in query parameter!');
   }
-  if (isNaN(+id)) {
-    return ctx.throw(400, 'Id must be type of number!');
-  }
 
   const note = ctx.request.body;
 

@@ -5,6 +5,12 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../libs/connection');
 
 const TodoItem = sequelize.define('TodoItem', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+  },
   subject: {
     type: DataTypes.TEXT,
     allowNull: false,
