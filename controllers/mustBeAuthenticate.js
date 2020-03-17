@@ -1,4 +1,3 @@
-/* eslint-disable require-atomic-updates */
 'use strict';
 
 const users = require('../db/users');
