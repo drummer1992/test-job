@@ -74,7 +74,8 @@ __Server API__
 | DELETE  | /api/todoList/: | Delete the note            |     id      |     true        |
 
 
-Example of requests:
+
+__Example of requests__:
 ```js
 // POST /api/register
 
