@@ -64,7 +64,7 @@ __Client CLI__
 __Server API__
 
 
-| Methods | Routes          | Description                | Parameters  | isRequiredToken |
+| Method  | Route           | Description                | Parameter  | isRequiredToken  |
 |---------|-----------------|----------------------------|-------------|-----------------|
 | POST    | /api/register   | User registration          |     --      |     false       |
 | POST    | /api/login      | User authentication        |     --      |     false       |
