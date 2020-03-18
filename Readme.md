@@ -1,5 +1,13 @@
 # TodoListApp cli-client / server
 
+- RESTful API on Koa.js
+- Authorization by login / password (Passport.js)
+- Config have option to switch between in memory storage and persistent storage
+- CLI client on Raw Node.js
+- Connects to the server and manages TodoList-Items (__CRUD__)
+
+
+
 From the begining you must:
 
 _1:_ Create database __todolist_app__ in PostgresSQL DB :
