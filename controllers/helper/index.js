@@ -22,7 +22,7 @@ module.exports.isDeleteOrUpdate = async function isDeleteOrUpdate(id, user, note
     }
     return null;
   }
-
+  // if persistent storage === true
   if (!note) {
     const todo = await await TodoList_Item.findByPk(id);
     return todo ?
