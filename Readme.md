@@ -34,7 +34,7 @@ At the root of the application folder, type:
 
 __4.1__:
 
-__npm start__ === store server items in-memory)
+__npm start__ === store server items in-memory
 
 OR
 
