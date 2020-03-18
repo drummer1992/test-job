@@ -19,7 +19,7 @@ module.exports = async ctx => {
 
 async function createItem(note, id) {
   if (!persistent) {
-    const todoListItem = new TodoListItem(note);
+    const todoListItem = new TodoListItem(maper(note, id));
     return todoList[id].push(todoListItem);
   }
   await TodoList_Item.create(maper(note, id));

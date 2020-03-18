@@ -19,15 +19,16 @@ module.exports = async ctx => {
     return ctx.throw(400, 'Subject and notes are required fields for the request!');
   }
 
-  const userId = ctx.user.id;
+  const user = ctx.user;
 
-  const updated = await isDeleteOrUpdate(id, userId, note);
+  const updated = await isDeleteOrUpdate(id, user, note);
 
-  if (updated) {
-    return ctx.body = {
-      message: 'Note updated!',
-      note,
-    };
+  if (!updated) {
+    return ctx.throw(404, 'This note does not exist!');
   }
-  return ctx.throw(404, 'This note does not exist!');
+
+  return ctx.body = {
+    message: 'Note updated!',
+    note,
+  };
 };

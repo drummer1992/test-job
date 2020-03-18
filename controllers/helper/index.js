@@ -8,20 +8,22 @@ const { db: { persistent } } = require('../../config');
 const TodoListItem = require('../../models/localModels/TodoList_Item');
 const TodoList_Item = require('../../models/sequelize/TodoList_Item');
 
-module.exports.isDeleteOrUpdate = async function isDeleteOrUpdate(id, userId, data) {
+module.exports.isDeleteOrUpdate = async function isDeleteOrUpdate(id, user, note) {
   if (!persistent) {
-    const notes = todoList[userId];
-    for (let i = 0; i < notes.length; i++) {
-      if (notes[i].id === id) {
-        return data ?
-          notes.splice(i, 1, new TodoListItem(data)) :
-          notes.splice(i, 1);
-      }
+    if (!user.isAdmin) {
+      const notes = todoList[user.id];
+      return findTodoItemAndDeleteOrUpdate(notes, id, user, note);
+    }
+    // if isAdmin === true
+    for (const userId in todoList) {
+      const notes = todoList[userId];
+      const isOk = findTodoItemAndDeleteOrUpdate(notes, id, user, note);
+      if (isOk) return isOk;
     }
     return null;
   }
 
-  if (!data) {
+  if (!note) {
     const todo = await await TodoList_Item.findByPk(id);
     return todo ?
       await todo.destroy() :
@@ -29,8 +31,19 @@ module.exports.isDeleteOrUpdate = async function isDeleteOrUpdate(id, userId, da
   }
   const todo = await TodoList_Item.findByPk(id);
   return todo ?
-    await todo.update(maper(data, userId)) :
+    await todo.update(maper(note, user.id)) :
     null;
 };
+
+function findTodoItemAndDeleteOrUpdate(notes, id, user, note) {
+  for (let i = 0; i < notes.length; i++) {
+    if (notes[i].id === id) {
+      return note ?
+        notes.splice(i, 1, new TodoListItem(maper(note, user.id))) :
+        notes.splice(i, 1);
+    }
+  }
+  return null;
+}
 
 module.exports.isValidUUID = id => id.length === uuid().length;

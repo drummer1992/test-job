@@ -14,15 +14,15 @@ module.exports = async ctx => {
     return ctx.throw(400, 'Invalid id!');
   }
 
-  const userId = ctx.user.id;
+  const user = ctx.user;
 
-  const deleted = await isDeleteOrUpdate(id, userId);
-  if (deleted) {
-    return ctx.body = {
-      message: 'The note has been deleted!'
-    };
+  const deleted = await isDeleteOrUpdate(id, user);
+  if (!deleted) {
+    return ctx.throw(404, 'This note does not exist!');
   }
-  return ctx.throw(404, 'This note does not exist!');
+  return ctx.body = {
+    message: 'The note has been deleted!'
+  };
 };
 
 

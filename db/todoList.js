@@ -3,9 +3,9 @@
 module.exports = {/*{
   userId: [{
     id: ...,
-    note: {
-      subject: text,
-    },
+    subject: ...,
+    note: ...,
+    TodoUserId: ...,
   },
   ...
 ]
