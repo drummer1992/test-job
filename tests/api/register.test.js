@@ -18,11 +18,10 @@ before(done => {
 });
 
 async function additional() {
-  if (!config.db.persistent) return false;
+  if (!config.db.persistent) return;
   const user = { login: 'test' };
   const testUser = await User.findOne({ where: user });
   testUser && await testUser.destroy();
-  return true;
 }
 
 
@@ -38,11 +37,15 @@ after(done => {
 
 describe('/api/register', () => {
   it('should return { "message": "Registration was successful!" } and status 201', done => {
-    const body = JSON.stringify({
+    const user = JSON.stringify({
       login: 'test',
       password: '1',
     });
-    assertRequest(body, 'POST', '/api/register')
+    assertRequest({
+      body: user,
+      method: 'POST',
+      path: '/api/register'
+    })
       .then(({ response, statusCode }) => {
         assert.deepEqual(response.message, 'Registration was successful!');
         assert.deepEqual(statusCode, 201);
@@ -52,11 +55,15 @@ describe('/api/register', () => {
   });
 
   it('should return { "error": "This login already exists!" } and status 400', done => {
-    const body = JSON.stringify({
+    const user = JSON.stringify({
       login: 'test',
       password: '1',
     });
-    assertRequest(body, 'POST', '/api/register')
+    assertRequest({
+      body: user,
+      method: 'POST',
+      path: '/api/register'
+    })
       .then(({ response, statusCode }) => {
         assert.deepEqual(response.error, 'This login already exists!');
         assert.deepEqual(statusCode, 400);
@@ -65,14 +72,18 @@ describe('/api/register', () => {
       .catch(done);
   });
 
-  it('should return { "error": "The username and password fields must be filled in!" } and status 400', done => {
-    const body = JSON.stringify({
+  it('should return { "error": "The login and password fields must be filled in!" } and status 400', done => {
+    const user = JSON.stringify({
       login: '',
       password: '',
     });
-    assertRequest(body, 'POST', '/api/register')
+    assertRequest({
+      body: user,
+      method: 'POST',
+      path: '/api/register'
+    })
       .then(({ response, statusCode }) => {
-        assert.deepEqual(response.error, 'The username and password fields must be filled in!');
+        assert.deepEqual(response.error, 'The login and password fields must be filled in!');
         assert.deepEqual(statusCode, 400);
       })
       .then(done)

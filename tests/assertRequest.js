@@ -3,11 +3,7 @@
 const http = require('http');
 const config = require('../config');
 
-module.exports = function assertRequest(body, method, path) {
-  const json = JSON.parse(body);
-  const token = json.token;
-  delete json.token;
-  const _body = JSON.stringify(json);
+module.exports = function assertRequest({ token = '', body, method, path }) {
   return new Promise(resolve => {
     const options = {
       port: config.port,
@@ -16,8 +12,8 @@ module.exports = function assertRequest(body, method, path) {
       path,
       headers: {
         'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(_body),
-        'Authorization': `Bearer ${token || ''}`,
+        'Content-Length': Buffer.byteLength(body),
+        'Authorization': `Bearer ${token}`,
       }
     };
     const request = http.request(options, res => {
@@ -27,7 +23,8 @@ module.exports = function assertRequest(body, method, path) {
         resolve({ response, statusCode: res.statusCode });
       });
     });
-    request.write(_body);
+    // console.log({ token, method, path, body });
+    request.write(body);
     request.on('finish', request.end);
   });
 };

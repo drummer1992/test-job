@@ -52,9 +52,7 @@ _5_: Start cli-client app:
 
 _5_: Run tests:
 
-- __npm test ./tests/api/CRUD.test.js__
-- __npm test ./tests/api/registrer.test.js__
-- __npm test ./tests/api/login.test.js__ 
+- __npm test__
 
 
 __Client CLI__ <br>
