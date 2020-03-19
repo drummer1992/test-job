@@ -10,6 +10,7 @@ const passport = new KoaPassport();
 
 passport.use(new LocalStrategy({ session: false, usernameField: 'login' }, async (login, password, done) => {
   try {
+
     const user = await isExistsUser(login);
     if (!user) return done(null, false, 'This user does not exist!');
 
@@ -18,6 +19,7 @@ passport.use(new LocalStrategy({ session: false, usernameField: 'login' }, async
 
     return done(null, user);
   } catch (error) {
+    console.log(error);
     done(error);
   }
 }));

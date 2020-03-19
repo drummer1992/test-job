@@ -13,6 +13,11 @@ const todoList = require('../db/todoList');
 
 module.exports = async ctx => {
   const { login, password } = ctx.request.body;
+
+  if (!login || !password) {
+    return ctx.throw(400, 'The login and password fields must be filled in!');
+  }
+
   try {
     const isUnique = await isUniqueUser(login, password);
 

@@ -7,6 +7,10 @@ const users = require('../db/users');
 const { db: { persistent } } = require('../config');
 
 module.exports = async (ctx, next) => {
+  const { login, password  } = ctx.request.body;
+  if (!login || !password) {
+    return ctx.throw(400, 'The login and password fields must be filled in!');
+  }
   await passport.authenticate('local', async (err, user, info) => {
     if (err) throw err;
 

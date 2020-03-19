@@ -1,6 +1,5 @@
 'use strict';
 
-require('dotenv').config();
 const config = require('../../config.js');
 const { sequelize } = require('../../libs/connection');
 
@@ -59,18 +58,18 @@ describe('/api/login', () => {
   });
 
   it('should return { "error": "The login and password fields must be filled in!" } and status 400', done => {
-    const body = JSON.stringify({
+    const user = JSON.stringify({
       login: '',
       password: '',
     });
     assertRequest({
-      body,
+      body: user,
       method: 'POST',
       path: '/api/login'
     })
       .then(({ response, statusCode }) => {
-        assert.deepEqual(response.error, 'The login and password fields must be filled in!');
-        assert.deepEqual(statusCode, 400);
+        assert.strictEqual(response.error, 'The login and password fields must be filled in!');
+        assert.strictEqual(statusCode, 400);
       })
       .then(done)
       .catch(done);

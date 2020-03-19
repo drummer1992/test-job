@@ -24,6 +24,12 @@ async function isExistsToken(token) {
 module.exports = async (ctx, next) => {
   const token =  ctx.request.get('Authorization').split(' ')[1];
 
+  const { id } = ctx.params;
+
+  if (id && !isUUID.v4(id)) {
+    return ctx.throw(400, 'Invalid id!');
+  }
+
   if (!isUUID.v4(token)) {
     return ctx.throw(401, 'Invalid token!');
   }

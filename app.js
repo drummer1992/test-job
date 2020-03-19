@@ -1,7 +1,5 @@
-
 'use strict';
 
-require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
@@ -19,7 +17,6 @@ const deleteTodo = require('./controllers/deleteTodo');
 const todoList = require('./controllers/getTodoList');
 
 const mustBeAuthenticate = require('./controllers/mustBeAuthenticate');
-const validationErrorHandler = require('./libs/validationErrorHandler');
 
 app.use(async (ctx, next) => {
   try {
@@ -38,9 +35,9 @@ app.use(async (ctx, next) => {
 
 app.use(bodyParser());
 
-router.post('/login', validationErrorHandler, login);
+router.post('/login', login);
 
-router.post('/register', validationErrorHandler, register);
+router.post('/register', register);
 
 router.get('/todoList', mustBeAuthenticate, todoList);
 

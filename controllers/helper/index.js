@@ -1,6 +1,5 @@
 'use strict';
 
-const uuid = require('uuid/v4');
 const todoList = require('../../db/todoList');
 const maper = require('../../mappers/createOrUpdateTodo');
 const { db: { persistent } } = require('../../config');
@@ -46,4 +45,3 @@ function findTodoItemAndDeleteOrUpdate(notes, id, user, note) {
   return null;
 }
 
-module.exports.isValidUUID = id => id.length === uuid().length;
