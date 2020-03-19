@@ -14,7 +14,7 @@ module.exports = {
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'todolist_app',
     username: process.env.DB_USER_NAME || 'username_for_database',
-    persistent: true,
+    persistent: false,
     logging: false,
   }
 };
