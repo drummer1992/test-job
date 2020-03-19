@@ -4,8 +4,8 @@
   "description": "TodoListAPP cli-client / server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "mocha --timeout 0 -r ./index.js ./tests/api/register.test.js; mocha --timeout 0 -r ./index.js ./tests/api/login.test.js; mocha --timeout 0 -r ./index.js ./tests/api/CRUD.test.js;"
+    "start": "node index.js",
+    "test": "mocha --timeout 0 -r ./tests/startServer.js ./tests/api/register.test.js; mocha --timeout 0 -r ./tests/startServer.js ./tests/api/login.test.js; mocha --timeout 0 -r ./tests/startServer.js ./tests/api/CRUD.test.js;"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,6 @@
     "koa-bodyparser": "^4.2.1",
     "koa-passport": "^4.1.3",
     "koa-router": "^8.0.8",
-    "nodemon": "^2.0.2",
     "passport-local": "^1.0.0",
     "pg": "^7.18.2",
     "sequelize": "^5.21.5",

@@ -40,15 +40,11 @@ At the root of the application folder, type:
 - __node ./fixtures/createTables.js__
 
 
-_4_: Start server:
+_4_: Start TodoListApp:
 
 At the root of the application folder, type:
 
 - __npm start__
-
-_5_: Start cli-client app:
-
-- __node ./client/main.js__
 
 _5_: Run tests:
 

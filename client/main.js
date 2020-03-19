@@ -8,6 +8,5 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-start(rl);
 
-
+module.exports = { start, rl };
