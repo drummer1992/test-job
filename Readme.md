@@ -8,19 +8,46 @@
 
 
 
+__Start TodoListApp with inMemory storage:__
+
+At the root of the application folder, type:
+
+- __npm start__
+
+__Run tests:__
+
+- __npm test__
+
+
+__Start TodoListApp with persistent storage:__
+
 From the begining you must:
 
-_1:_ Create database __todolist_app__ in PostgresSQL DB :
+- Create database __todolist_app__ in PostgresSQL DB
 
-_2_: Change config file: ./config.js
+- Change config file: ./config.js
 
-__username__: username_for_database must be YOUR __username__
+username: 
 
-__persistent__:
+username for database must be __YOUR USERNAME__
 
-- __true__ => store server items in persistent storage
+persistent:
 
-- __false__ => store server items inMemory storage
+true => store server items in persistent storage
+
+- Create sequelize moodels:
+
+At the root of the application folder, type:
+
+- node ./fixtures/createTables.js
+
+__Start App :__
+
+- __npm start__
+
+__Run tests:__
+
+- __npm test__
 
 ```js
   db: {
@@ -33,22 +60,11 @@ __persistent__:
   }
 ```
 
-_3:_ Create all tables with script:
+- Create all tables with script:
 
 At the root of the application folder, type:
 
 - __node ./fixtures/createTables.js__
-
-
-_4_: Start TodoListApp:
-
-At the root of the application folder, type:
-
-- __npm start__
-
-_5_: Run tests:
-
-- __npm test__
 
 
 __Client CLI__ <br>
