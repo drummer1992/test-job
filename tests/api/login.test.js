@@ -77,4 +77,42 @@ describe('/api/login', () => {
 
   });
 
+  it('should return { "error": "Invalid password!" } and status 401', done => {
+    const body = JSON.stringify({
+      login: 'test',
+      password: '2',
+    });
+    assertRequest({
+      body,
+      method: 'POST',
+      path: '/api/login'
+    })
+      .then(({ response, statusCode }) => {
+        assert.deepEqual(response.error, 'Invalid password!');
+        assert.deepEqual(statusCode, 401);
+      })
+      .then(done)
+      .catch(done);
+
+  });
+
+  it('should return { "error": "This user does not exist!" } and status 401', done => {
+    const body = JSON.stringify({
+      login: 'test100',
+      password: '2',
+    });
+    assertRequest({
+      body,
+      method: 'POST',
+      path: '/api/login'
+    })
+      .then(({ response, statusCode }) => {
+        assert.deepEqual(response.error, 'This user does not exist!');
+        assert.deepEqual(statusCode, 401);
+      })
+      .then(done)
+      .catch(done);
+
+  });
+
 });

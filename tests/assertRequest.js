@@ -23,7 +23,7 @@ module.exports = function assertRequest({ token = '', body, method, path }) {
         resolve({ response, statusCode: res.statusCode });
       });
     });
-    // console.log({ token, method, path, body });
+
     request.write(body);
     request.on('finish', request.end);
   });
