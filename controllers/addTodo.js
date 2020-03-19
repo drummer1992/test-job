@@ -14,6 +14,7 @@ module.exports = async ctx => {
   }
   const { id } = ctx.user;
   await createItem(note, id);
+  ctx.status = 201;
   ctx.body = { message: 'Note added successfully!' };
 };
 

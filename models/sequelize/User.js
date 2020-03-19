@@ -6,7 +6,7 @@ const TodoListItem = require('./TodoList_Item');
 const crypto = require('crypto');
 const { crypto: config } = require('../../config');
 
-const sequelize = require('../../libs/connection');
+const { sequelize } = require('../../libs/connection');
 
 const User = sequelize.define('TodoUser', {
   id: {

@@ -25,6 +25,7 @@ module.exports = async ctx => {
       isAdmin: login === 'admin',
     };
     await createUser(user, password);
+    ctx.status = 201;
     ctx.body = { message: 'Registration was successful!' };
   } catch (error) {
     return ctx.throw(500, error);

@@ -6,8 +6,8 @@ const { db: {
   username,
   database,
   dialect,
-  persistent,
-} } = require('../config');
+  logging,
+}, port } = require('../config');
 
 const { Sequelize } = require('sequelize');
 
@@ -17,15 +17,19 @@ const sequelize = new Sequelize({
   username,
   database,
   dialect,
+  logging,
 });
 
 async function connection(persistent) {
   if (persistent) {
+    console.log(`Server start on port ${port} with persistent storage!`);
     await sequelize.sync();
     await sequelize.authenticate();
+
+  } else {
+    console.log(`Server start on port ${port} with inMemory storage!`);
   }
 }
 
-connection(persistent);
 
-module.exports = sequelize;
+module.exports = { sequelize, connection };

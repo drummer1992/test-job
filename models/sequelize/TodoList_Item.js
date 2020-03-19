@@ -2,7 +2,7 @@
 
 const { DataTypes } = require('sequelize');
 
-const sequelize = require('../../libs/connection');
+const { sequelize } = require('../../libs/connection');
 
 const TodoItem = sequelize.define('TodoItem', {
   id: {

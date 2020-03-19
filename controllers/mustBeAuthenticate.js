@@ -3,6 +3,7 @@
 const users = require('../db/users');
 const { db: { persistent } } = require('../config');
 const User = require('../models/sequelize/User');
+const isUUID = require('is-uuid');
 
 async function isExistsToken(token) {
   if (!persistent) {
@@ -22,13 +23,15 @@ async function isExistsToken(token) {
 
 module.exports = async (ctx, next) => {
   const token =  ctx.request.get('Authorization').split(' ')[1];
-  if (!token) {
-    return ctx.throw(401, 'Must be authenticated!');
+
+  if (!isUUID.v4(token)) {
+    return ctx.throw(401, 'Invalid token!');
   }
+
   const loginUser = await isExistsToken(token);
 
   if (!loginUser) {
-    return ctx.throw(401, 'Invalid token!');
+    return ctx.throw(401, 'Must be authenticated!');
   }
   ctx.user = loginUser;
   await next();

@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   port: process.env.PORT || 3000,
   host: 'localhost',
@@ -13,6 +14,7 @@ module.exports = {
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'todolist_app',
     username: process.env.DB_USER_NAME || 'username_for_database',
-    persistent: !!process.argv[2] || false,
+    persistent: false,
+    logging: console.log
   }
 };

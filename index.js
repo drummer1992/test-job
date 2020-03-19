@@ -1,8 +1,9 @@
 'use strict';
 
-const app = require('./app');
-const { port } = require('./config');
 
-app.listen(port, () => {
-  console.log(`HTTP server running: http://localhost:${port}`);
-});
+const app = require('./app');
+const config = require('./config');
+const { connection } = require('./libs/connection');
+
+connection(config.db.persistent);
+app.listen(config.port);

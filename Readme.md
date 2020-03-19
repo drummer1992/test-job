@@ -12,11 +12,15 @@ From the begining you must:
 
 _1:_ Create database __todolist_app__ in PostgresSQL DB :
 
-_2_: Change config file: 
+_2_: Change config file: ./config.js
 
-__ps__: username_for_database must be YOUR __username__
+__username__: username_for_database must be YOUR __username__
 
-__path__: at the root of the application folder ./config.js
+__persistent__:
+
+- __true__ => store server items in persistent storage
+
+- __false__ => store server items inMemory storage
 
 ```js
   db: {
@@ -25,7 +29,7 @@ __path__: at the root of the application folder ./config.js
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'todolist_app',
     username: process.env.DB_USER_NAME || 'username_for_database',
-    persistent: !!process.argv[2] || false,
+    persistent: false,
   }
 ```
 
@@ -33,26 +37,24 @@ _3:_ Create all tables with script:
 
 At the root of the application folder, type:
 
-__node ./fixtures/createTables.js__
+- __node ./fixtures/createTables.js__
 
 
 _4_: Start server:
 
 At the root of the application folder, type:
 
-__4.1__:
-
-__npm start__ === store server items in-memory
-
-OR
-
-__4.2__:
-
-__npm start true__ === store server items in persistent storage
+- __npm start__
 
 _5_: Start cli-client app:
 
-__node ./client/main.js__
+- __node ./client/main.js__
+
+_5_: Run tests:
+
+- __npm test ./tests/api/CRUD.test.js__
+- __npm test ./tests/api/registrer.test.js__
+- __npm test ./tests/api/login.test.js__ 
 
 
 __Client CLI__ <br>

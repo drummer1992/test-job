@@ -2,18 +2,13 @@
 
 const { isDeleteOrUpdate, isValidUUID } = require('./helper');
 
+const isUUID = require('is-uuid');
 
 module.exports = async ctx => {
   const { id } = ctx.params;
-
-  if (!id) {
-    return ctx.throw(400, 'No id specified in query parameter!');
-  }
-
-  if (!isValidUUID(id)) {
+  if (!isUUID.v4(id)) {
     return ctx.throw(400, 'Invalid id!');
   }
-
   const user = ctx.user;
 
   const deleted = await isDeleteOrUpdate(id, user);

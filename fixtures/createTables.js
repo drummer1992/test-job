@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const sequelize = require('../libs/connection');
+const { sequelize } = require('../libs/connection');
 
 const User = require('../models/sequelize/User');
 const TodoListItem = require('../models/sequelize/TodoList_Item');
