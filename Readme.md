@@ -60,12 +60,6 @@ __Run tests:__
   }
 ```
 
-- Create all tables with script:
-
-At the root of the application folder, type:
-
-- __node ./fixtures/createTables.js__
-
 
 __Client CLI__ <br>
 
