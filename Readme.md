@@ -61,7 +61,13 @@ __Run tests:__
     persistent: false,
   }
 ```
+__Start one more CLI client:__
 
+- node ./client/main.js -c
+
+__Start only server:__
+
+- node ./index.js -s
 
 __Client CLI__ <br>
 
