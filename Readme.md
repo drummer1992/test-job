@@ -4,7 +4,9 @@
 - Authorization by login / password (Passport.js)
 - Config have option to switch between in memory storage and persistent storage
 - CLI client on Raw Node.js
+- Chat for authorized users, with WebSocket protocol and the socket.io library
 - Connects to the server and manages TodoList-Items (__CRUD__)
+- p/s: "admin" user can manage all items
 
 
 
@@ -72,6 +74,7 @@ __Client CLI__ <br>
 |         read              |     View all notes        |
 |         update            |     Update the note       |
 |         delete            |     Delete the note       |
+|         chat              |       Go to chat          |
 |         stop              |          Exit             |
 
 
