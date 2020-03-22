@@ -1,35 +1,36 @@
 'use strict';
 
+const io = require('socket.io-client');
+
 const storage = require('./token');
 
 const { port } = require('../config');
 
-const socket = require('socket.io-client')(`http://localhost:${port}`, {
-  path: '/chat'
-});
+const queryMessage = 'Welcome to chat!\np/s: if you want to return to the previous page, print "/back"\n';
 
-socket.on('message', console.log);
+module.exports =  async function chat(rl, question = queryMessage) {
+  if (!storage.token) return { error: 'Must be authenticated!' };
+  const socket = io(`http://localhost:${port}`, {
+    path: `/chat/?id=${storage.token}/${storage.login}`
+  });
 
-const MESSAGE = 'Welcome to chat!\np/s: if you want to return to the previous page, print "/back"\n';
+  socket.on('message', console.log);
 
-module.exports =  async function chat(rl, question = MESSAGE) {
-  if (!storage.token) return resolve({ error: 'Must be authenticated!' });
-
-  socket.emit('login');
-  await conversation(rl, question);
+  await conversation(rl, question, socket);
 };
 
-async function conversation(rl, question) {
+async function conversation(rl, question, socket) {
   return new Promise(resolve => {
-    rl.question(question, answer => {
-      if (answer === '/back') {
+
+    rl.question(question, msg => {
+      if (msg === '/back') {
         socket.emit('logout');
         return resolve();
       }
 
-      socket.emit('message', `${[storage.login]}: ${answer}`);
+      socket.emit('message', { message: msg, login: storage.login });
 
-      return resolve(conversation(rl, ''));
+      return resolve(conversation(rl, '', socket));
     });
   });
 }
