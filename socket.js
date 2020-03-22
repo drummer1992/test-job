@@ -9,13 +9,11 @@ const io = require('socket.io')(server, {
 io.on('connection', socket => {
   socket.on('login', () => socket.join('users', () => {
     socket
-      .broadcast
       .to('users')
       .emit('message', 'A new user has joined the room!');
   }));
   socket.on('logout', () => socket.leave('users', () => {
     socket
-      .broadcast
       .to('users')
       .emit('message', 'A user has left the room!');
   }));
