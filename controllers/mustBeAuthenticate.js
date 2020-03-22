@@ -21,7 +21,7 @@ async function isExistsToken(token) {
 }
 
 
-module.exports = async (ctx, next) => {
+module.exports.mustBeAuthenticate = async (ctx, next) => {
   const token =  ctx.request.get('Authorization').split(' ')[1];
 
   const { id } = ctx.params;
@@ -42,3 +42,4 @@ module.exports = async (ctx, next) => {
   ctx.user = loginUser;
   await next();
 };
+

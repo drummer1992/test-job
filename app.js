@@ -1,10 +1,14 @@
 'use strict';
 
+const http = require('http');
 const Koa = require('koa');
+const app = new Koa();
+const server = http.createServer(app.callback());
+
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 
-const app = new Koa();
+
 const router = new Router({
   prefix: '/api'
 });
@@ -16,7 +20,7 @@ const updateTodo = require('./controllers/updateTodo');
 const deleteTodo = require('./controllers/deleteTodo');
 const todoList = require('./controllers/getTodoList');
 
-const mustBeAuthenticate = require('./controllers/mustBeAuthenticate');
+const { mustBeAuthenticate } = require('./controllers/mustBeAuthenticate');
 
 app.use(async (ctx, next) => {
   try {
@@ -55,4 +59,4 @@ app
     ctx.body = { error: 'Not Found' };
   });
 
-module.exports = app;
+module.exports = { server };

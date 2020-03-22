@@ -7,8 +7,20 @@ const create = require('./create');
 const read = require('./read');
 const update = require('./update');
 const remove = require('./delete');
+const chat = require('./chat');
 
-module.exports = async function start(rl) {
+const message = `TodoListApp CLI:\n
+register  ---  User registration
+login     ---  User authentication
+create    ---  To create a note
+read      ---  View all notes
+update    ---  Update the note
+delete    ---  Delete the note
+chat      ---  Chat
+stop      ---  Exit
+\n`;
+
+module.exports = async function start(rl, queryMessage = message) {
   const queries = {
     register,
     login,
@@ -17,30 +29,28 @@ module.exports = async function start(rl) {
     update,
     delete: remove,
     stop,
+    chat,
+    help: start.bind(null, rl, message),
   };
-  const message = `TodoListApp CLI:\n
-    register  ---  User registration
-    login     ---  User authentication
-    create    ---  To create a note
-    read      ---  View all notes
-    update    ---  Update the note
-    delete    ---  Delete the note
-    stop      ---  Exit
-  \n`;
-  rl.question(`What do we do?\n\n${message}`, async answer => {
+
+  rl.question(`What do we do?\n\n${queryMessage}`, async answer => {
 
     if (!Object.keys(queries).includes(answer)) {
-      console.log({ error: 'Bad request!' }, '\n');
+      return queries.help();
     }
+
     try {
+
       const res = await queries[answer](rl);
       res && console.log(res);
-      start(rl);
+      start(rl, '');
+
     } catch (error) {
-      if (!error.message)
-        console.log(error);
+
+      if (!error.message) console.log(error);
+
     }
-    return start(rl);
+    return start(rl, '');
   });
 };
 

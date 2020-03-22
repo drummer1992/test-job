@@ -2,7 +2,7 @@
 
 const http = require('http');
 const { host, port } = require('../config');
-const tokenStorage = require('./token');
+const storage = require('./token');
 
 module.exports = function request(path, method, body, token) {
   return new Promise(resolve => {
@@ -25,7 +25,7 @@ module.exports = function request(path, method, body, token) {
         try {
           const body = JSON.parse(chunk);
           if (body.token) {
-            tokenStorage.token = body.token;
+            storage.token = body.token;
             return resolve({ message: 'You have successfully authenticated!' });
           }
           return resolve(body);
@@ -38,6 +38,7 @@ module.exports = function request(path, method, body, token) {
     request.on('finish', request.end);
     request.on('error', error => {
       if (error.code === 'ECONNREFUSED') {
+        console.log(host, port);
         console.log({ message: 'No connection to server!' });
         process.exit();
       }
