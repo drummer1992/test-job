@@ -13,7 +13,6 @@ io.on('connection', socket => {
     .id.split('/');
   if (!isUUID.v4(token)) {
     socket.send('You must be authenticated (login)');
-    socket.disconnect(true);
   }
   socket.join('users', () => {
     socket
@@ -24,6 +23,7 @@ io.on('connection', socket => {
     socket
       .to('users')
       .emit('message', `${login} has left the room!`);
+    socket.disconnect(true);
   }));
 
   socket.on('message', msg => {

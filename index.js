@@ -8,5 +8,7 @@ const { rl, start } = require('./client/main');
 
 connection(config.db.persistent);
 
-app.listen(config.port, start.bind(null, rl));
+const onlyServer = process.argv[2] === '-s';
+
+app.listen(config.port, !onlyServer && start.bind(null, rl));
 
