@@ -7,7 +7,8 @@ module.exports = function register(rl) {
   return new Promise(resolve => {
     rl.question('Please enter a login!\n\n', login => {
       rl.stdoutMuted = true;
-      rl.question('Please enter a password!\n\n', async password => {
+      console.log('Please enter a password!');
+      rl.question('', async password => {
         rl.stdoutMuted = false;
         if (!login || !password) return resolve({ error: 'All fields are required!' });
 
