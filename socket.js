@@ -17,12 +17,12 @@ io.on('connection', socket => {
   socket.join('users', () => {
     socket
       .to('users')
-      .emit('message', `${login} has joined the room!`);
+      .emit('message', `${login} has joined the chat!`);
   });
-  socket.on('logout', () => socket.leave('users', () => {
+  socket.on('exit', () => socket.leave('users', () => {
     socket
       .to('users')
-      .emit('message', `${login} has left the room!`);
+      .emit('message', `${login} has left the chat!`);
     socket.disconnect(true);
   }));
 

@@ -24,7 +24,7 @@ async function conversation(rl, question, socket) {
 
     rl.question(question, msg => {
       if (msg === '/back') {
-        socket.emit('logout');
+        socket.emit('exit');
         return resolve();
       }
 
