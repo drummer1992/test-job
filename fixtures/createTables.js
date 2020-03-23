@@ -1,7 +1,5 @@
 'use strict';
-require('dotenv').config({
-  path: path.join(__dirname, '../.env'),
-});
+require('dotenv').config();
 
 const { sequelize } = require('../libs/connection');
 
@@ -14,6 +12,7 @@ async function createTables() {
     TodoListItem.belongsTo(User);
     await User.sync();
     await TodoListItem.sync();
+    console.log('Done');
   } catch (error) {
     console.log(error);
   }
