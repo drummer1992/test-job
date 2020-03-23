@@ -1,5 +1,4 @@
 'use strict';
-
 const config = require('../../config.js');
 const { sequelize } = require('../../libs/connection');
 

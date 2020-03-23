@@ -1,5 +1,4 @@
 'use strict';
-
 const register = require('./register');
 const login = require('./login');
 const stop = require('./stop');

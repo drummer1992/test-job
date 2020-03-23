@@ -1,5 +1,4 @@
 'use strict';
-
 const { db: { persistent } } = require('../config');
 
 const User = require('../models/sequelize/User');

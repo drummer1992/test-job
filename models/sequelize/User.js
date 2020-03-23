@@ -1,5 +1,4 @@
 'use strict';
-
 const { DataTypes } = require('sequelize');
 const TodoListItem = require('./TodoList_Item');
 

@@ -1,6 +1,7 @@
 'use strict';
-
-require('dotenv').config();
+require('dotenv').config({
+  path: path.join(__dirname, '../.env'),
+});
 
 const { sequelize } = require('../libs/connection');
 

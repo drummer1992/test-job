@@ -1,5 +1,4 @@
 'use strict';
-
 const { KoaPassport } = require('koa-passport');
 const LocalStrategy = require('passport-local').Strategy;
 

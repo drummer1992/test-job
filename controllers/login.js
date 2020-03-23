@@ -1,5 +1,4 @@
 'use strict';
-
 const passport = require('../libs/passport');
 const uuid = require('uuid/v4');
 

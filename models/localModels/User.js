@@ -1,5 +1,4 @@
 'use strict';
-
 const uuid = require('uuid/v4');
 const crypto = require('crypto');
 const { crypto: config } = require('../../config');

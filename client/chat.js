@@ -1,5 +1,4 @@
 'use strict';
-
 const io = require('socket.io-client');
 
 const storage = require('./token');

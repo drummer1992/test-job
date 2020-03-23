@@ -1,5 +1,4 @@
 'use strict';
-
 const { db: {
   host,
   password,

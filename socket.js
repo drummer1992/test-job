@@ -1,5 +1,4 @@
 'use strict';
-
 const { server } = require('./app');
 const isUUID = require('is-uuid');
 const io = require('socket.io')(server, {

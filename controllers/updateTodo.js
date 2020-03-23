@@ -1,5 +1,4 @@
 'use strict';
-
 const TodoList = require('../models/sequelize/TodoList_Item');
 const TodoListLocal = require('../models/localModels/TodoList_Item');
 const { db: { persistent } } = require('../config');

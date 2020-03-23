@@ -1,6 +1,4 @@
 'use strict';
-
-
 const { server: app } = require('../app');
 const config = require('../config');
 const { connection } = require('../libs/connection');

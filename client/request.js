@@ -1,5 +1,4 @@
 'use strict';
-
 const http = require('http');
 const { host, port } = require('../config');
 const storage = require('./token');

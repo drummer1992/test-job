@@ -1,5 +1,4 @@
 'use strict';
-
 const TodoListLocal = require('../models/localModels/TodoList_Item');
 const TodoList = require('../models/sequelize/TodoList_Item');
 

@@ -1,5 +1,4 @@
 'use strict';
-
 const { server: app } = require('./app');
 require('./socket');
 const config = require('./config');
