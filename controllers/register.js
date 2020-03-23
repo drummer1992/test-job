@@ -2,13 +2,8 @@
 
 const { db: { persistent } } = require('../config');
 
-const User = persistent ?
-  require('../models/sequelize/User') :
-  require('../models/localModels/User');
-
-const users = require('../db/users');
-
-const todoList = require('../db/todoList');
+const User = require('../models/sequelize/User');
+const UserLocal = require('../models/localModels/User');
 
 
 module.exports = async ctx => {
@@ -41,11 +36,9 @@ module.exports = async ctx => {
 
 async function createUser(user, password) {
   if (!persistent) {
-    const newUser = new User(user);
-    const { id } = newUser;
-    users[id] = newUser;
-    todoList[id] = [];
-    return await newUser.setPassword(password);
+    const newUser = UserLocal.build(user);
+    await newUser.setPassword(password);
+    return newUser.save();
   }
 
   const newUser = await User.build(user);
@@ -55,12 +48,8 @@ async function createUser(user, password) {
 
 async function isUniqueUser(login) {
   if (!persistent) {
-    for (const id in users) {
-      if (users[id].login === login) {
-        return false;
-      }
-    }
-    return true;
+    const user = UserLocal.findByLogin(login);
+    return !user;
   }
   const user = await User.findOne({
     where: { login }

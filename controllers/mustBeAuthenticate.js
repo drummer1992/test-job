@@ -1,23 +1,16 @@
 'use strict';
 
-const users = require('../db/users');
 const { db: { persistent } } = require('../config');
 const User = require('../models/sequelize/User');
+const UserLocal = require('../models/localModels/User');
 const isUUID = require('is-uuid');
 
 async function isExistsToken(token) {
   if (!persistent) {
-    let loginUser = null;
-    for (const id in users) {
-      const user = users[id];
-      if (user.token === token) {
-        loginUser = user;
-      }
-    }
-    return loginUser;
+    return UserLocal.findByToken(token);
   }
-  const user = await User.findOne({ where: { token } });
-  return user;
+  return await User.findOne({ where: { token } });
+
 }
 
 

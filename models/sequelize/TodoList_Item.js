@@ -23,4 +23,16 @@ const TodoItem = sequelize.define('TodoItem', {
   timestamps: false,
 });
 
+TodoItem._map = function _map(id, note, userId) {
+  for (const subject of Object.keys(note)) {
+    return {
+      id,
+      subject,
+      note: note[subject],
+      TodoUserId: userId,
+    };
+  }
+};
+
 module.exports = TodoItem;
+

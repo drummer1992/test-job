@@ -2,7 +2,6 @@
 
 const passport = require('../libs/passport');
 const uuid = require('uuid/v4');
-const users = require('../db/users');
 
 const { db: { persistent } } = require('../config');
 
@@ -25,7 +24,7 @@ module.exports = async (ctx, next) => {
 async function loginUser(user) {
   const token = uuid();
   if (!persistent) {
-    users[user.id].token = token;
+    user.token = token;
   } else {
     user.token = token;
     await user.save();

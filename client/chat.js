@@ -11,7 +11,7 @@ const queryMessage = 'Welcome to chat!\np/s: if you want to return to the previo
 module.exports =  async function chat(rl, question = queryMessage) {
   if (!storage.token) return { error: 'Must be authenticated!' };
   const socket = io(`http://localhost:${port}`, {
-    path: `/chat/?id=${storage.token}/${storage.login}`
+    path: `/chat/?token=${storage.token}&&login=${storage.login}&&`
   });
 
   socket.on('message', console.log);
@@ -22,7 +22,7 @@ module.exports =  async function chat(rl, question = queryMessage) {
 async function conversation(rl, question, socket) {
   return new Promise(resolve => {
 
-    rl.question(question, msg => {
+    rl.question(question, async msg => {
       if (msg === '/back') {
         socket.emit('exit');
         return resolve();
@@ -30,7 +30,7 @@ async function conversation(rl, question, socket) {
 
       socket.emit('message', { message: msg, login: storage.login });
 
-      return resolve(conversation(rl, '', socket));
+      return resolve(await conversation(rl, '', socket));
     });
   });
 }

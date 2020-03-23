@@ -1,9 +1,8 @@
 'use strict';
 
-const todoList = require('../db/todoList');
-const TodoListItem = require('../models/localModels/TodoList_Item');
-const TodoList_Item = require('../models/sequelize/TodoList_Item');
-const maper = require('../mappers/createOrUpdateTodo');
+const TodoListLocal = require('../models/localModels/TodoList_Item');
+const TodoList = require('../models/sequelize/TodoList_Item');
+const uuid = require('uuid/v4');
 
 const { db: { persistent } } = require('../config');
 
@@ -18,11 +17,13 @@ module.exports = async ctx => {
   ctx.body = { message: 'Note added successfully!' };
 };
 
-async function createItem(note, id) {
+async function createItem(note, userId) {
+  const id = uuid();
   if (!persistent) {
-    const todoListItem = new TodoListItem(maper(note, id));
-    return todoList[id].push(todoListItem);
+    const prepareData = TodoListLocal._map(id, note, userId);
+    return TodoListLocal.create(prepareData);
   }
-  await TodoList_Item.create(maper(note, id));
+  const prepareData = TodoList._map(id, note, userId);
+  return await TodoList.create(prepareData);
 }
 

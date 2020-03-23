@@ -4,8 +4,8 @@ const { KoaPassport } = require('koa-passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/sequelize/User');
+const UserLocal = require('../models/localModels/User');
 const { db: { persistent } } = require('../config');
-const users = require('../db/users');
 const passport = new KoaPassport();
 
 passport.use(new LocalStrategy({ session: false, usernameField: 'login' }, async (login, password, done) => {
@@ -31,15 +31,8 @@ module.exports = passport;
 
 async function isExistsUser(login) {
   if (!persistent) {
-    let user = null;
-    for (const id in users) {
-      if (users[id].login === login) {
-        user = users[id];
-      }
-    }
-    return user;
+    return UserLocal.findByLogin(login);
   }
-  const user = await User.findOne({ where: { login } });
-  return user;
+  return await User.findOne({ where: { login } });
 }
 

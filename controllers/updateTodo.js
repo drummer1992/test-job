@@ -1,6 +1,8 @@
 'use strict';
 
-const { isDeleteOrUpdate } = require('./helper');
+const TodoList = require('../models/sequelize/TodoList_Item');
+const TodoListLocal = require('../models/localModels/TodoList_Item');
+const { db: { persistent } } = require('../config');
 
 module.exports = async ctx => {
   const { id } = ctx.params;
@@ -13,7 +15,7 @@ module.exports = async ctx => {
 
   const user = ctx.user;
 
-  const updated = await isDeleteOrUpdate(id, user, note);
+  const updated = await isUpdate(id, note, user.id);
 
   if (!updated) {
     return ctx.throw(404, 'This note does not exist!');
@@ -24,3 +26,12 @@ module.exports = async ctx => {
     note,
   };
 };
+
+
+async function isUpdate(id, note, userId) {
+  if (!persistent) {
+    return TodoListLocal.findAndUpdate(id, note, userId);
+  }
+  const prepareNote = TodoList._map(id, note, userId);
+  return await TodoList.update(prepareNote, { where: { id } });
+}

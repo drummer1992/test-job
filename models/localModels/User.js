@@ -1,18 +1,33 @@
 'use strict';
 
+const uuid = require('uuid/v4');
 const crypto = require('crypto');
 const { crypto: config } = require('../../config');
-const uuid = require('uuid/v4');
 
-class User {
+class UserLocal {
 
-  constructor({ login, isAdmin }) {
-    this.id = uuid();
-    this.login = login;
-    this.hash = null;
-    this.salt = null;
-    this.isAdmin = isAdmin;
-    this.token = null;
+  static build({ login, isAdmin = false }) {
+    return new UserLocal({ login, isAdmin });
+  }
+
+  static findById(id) {
+    return UserLocal._storage[id] || null;
+  }
+
+  static findByToken(token) {
+    for (const field in UserLocal._storage) {
+      const user = UserLocal._storage[field];
+      if (user.token === token) return user;
+    }
+    return null;
+  }
+
+  static findByLogin(login) {
+    for (const id in UserLocal._storage) {
+      const user = UserLocal._storage[id];
+      if (user.login === login) return user;
+    }
+    return null;
   }
 
   static generateSalt() {
@@ -39,15 +54,38 @@ class User {
     });
   }
 
+  constructor({ login, isAdmin = false }) {
+    if (!login)
+      throw new Error('Login is required field!');
+    this.id = uuid();
+    this.login = login;
+    this.hash = null;
+    this.salt = null;
+    this.isAdmin = isAdmin;
+    this.token = null;
+  }
+
+  save() {
+    UserLocal._storage[this.id] = this;
+  }
+
   async setPassword(password) {
-    this.salt = await User.generateSalt();
-    this.hash = await User.generateHash(this.salt, password);
+    this.salt = await UserLocal.generateSalt();
+    this.hash = await UserLocal.generateHash(this.salt, password);
   }
 
   async checkPassword(password) {
-    const hash = await User.generateHash(this.salt, password);
+    const hash = await UserLocal.generateHash(this.salt, password);
     return hash === this.hash;
   }
 }
 
-module.exports = User;
+Object.defineProperty(UserLocal, '_storage', {
+  value: {},
+  writable: false,
+  configurable: false,
+  enumerable: false,
+});
+
+
+module.exports = UserLocal;

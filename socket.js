@@ -7,10 +7,8 @@ const io = require('socket.io')(server, {
 });
 
 io.on('connection', socket => {
-  const [token, login] = socket
-    .handshake
-    .query
-    .id.split('/');
+  const { token, login } = socket.handshake.query;
+
   if (!isUUID.v4(token)) {
     socket.send('You must be authenticated (login)');
   }
