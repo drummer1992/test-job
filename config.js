@@ -6,7 +6,7 @@ module.exports = {
   host: 'localhost',
   crypto: {
     length: 128,
-    iterations: 1,
+    iterations: 5,
     digest: 'sha512'
   },
   db: {
