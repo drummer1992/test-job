@@ -39,15 +39,10 @@ module.exports = async function start(rl, queryMessage = message) {
     }
 
     try {
-
       const res = await queries[answer](rl);
       res && console.log(res);
-      start(rl, '');
-
     } catch (error) {
-
       if (!error.message) console.log(error);
-
     }
     return start(rl, '');
   });

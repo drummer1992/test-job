@@ -10,9 +10,8 @@ const queryMessage = 'Welcome to chat!\np/s: if you want to return to the previo
 module.exports =  async function chat(rl, question = queryMessage) {
   if (!storage.token) return { error: 'Must be authenticated!' };
   const socket = io(`http://localhost:${port}`, {
-    path: `/chat/?token=${storage.token}&&login=${storage.login}&&`
+    path: `/chat/?token=${storage.token}&&login=${storage.login}&&`,
   });
-
   socket.on('message', console.log);
 
   await conversation(rl, question, socket);
